@@ -12,6 +12,7 @@ namespace bigschool.ViewModels
     {
 		public IEnumerable<Course> UpcommingCourses { get; set; }
 		public List<Following> ListFollowing { get; set; }
+		public List<Attendance> ListAttendance { get; set; }
 		public bool ShowAction { get; set; }
 
 		public int Id { get; set; }

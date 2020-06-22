@@ -24,17 +24,32 @@ namespace bigschool.Controllers
 		public IHttpActionResult Attend(AttendanceDto attendanceDto)
 		{
 			var userId = User.Identity.GetUserId();
-			if (_dbContext.Attendances.Any(a => a.AttendeeID == userId && a.CourseID == attendanceDto.CourseID))
-				return BadRequest("The attendance already exists!");
+			try
+            {
+				Attendance attendances = _dbContext.Attendances.Where(a => a.AttendeeID == userId && a.CourseID == attendanceDto.CourseID).FirstOrDefault();
 
-			var attendance = new Attendance
-			{
-				CourseID = attendanceDto.CourseID,
-				AttendeeID = userId
-			};
+				//if (_dbContext.Attendances.Any(a => a.AttendeeID == userId && a.CourseID == attendanceDto.CourseID))
+				if (attendances != null)
+				{
+					_dbContext.Attendances.Remove(attendances);
+					_dbContext.SaveChanges();
+				}
+				else
+				{
+					var attendance = new Attendance
+					{
+						CourseID = attendanceDto.CourseID,
+						AttendeeID = userId
+					};
 
-			_dbContext.Attendances.Add(attendance);
-			_dbContext.SaveChanges();
+					_dbContext.Attendances.Add(attendance);
+					_dbContext.SaveChanges();
+				}
+			}
+			catch(Exception ex)
+            {
+				return BadRequest("Error!");
+			}
 			
 			return Ok();
 		}

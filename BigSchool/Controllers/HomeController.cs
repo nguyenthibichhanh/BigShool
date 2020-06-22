@@ -40,8 +40,10 @@ namespace bigschool.Controllers
             {
                 var userId = User.Identity.GetUserId();
                 var follow = _dbContext.Followings.Where(f => f.FollowerId == userId).ToList();
+                var attendance = _dbContext.Attendances.Where(f => f.AttendeeID == userId).ToList();
 
                 viewModel.ListFollowing = follow;
+                viewModel.ListAttendance = attendance;
             }
 
             return View(viewModel);

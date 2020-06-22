@@ -207,9 +207,9 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\API\CouresesController.cs" />
+    <Compile Include="Controllers\API\CoursesController.cs" />
     <Compile Include="Controllers\AttendancesController.cs" />
-    <Compile Include="Controllers\CouresesController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
     <Compile Include="Controllers\FollowingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LecturerController.cs" />
@@ -321,9 +321,9 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Coureses\Create.cshtml" />
-    <Content Include="Views\Coureses\Attending.cshtml" />
-    <Content Include="Views\Coureses\Mine.cshtml" />
+    <Content Include="Views\Courses\Create.cshtml" />
+    <Content Include="Views\Courses\Attending.cshtml" />
+    <Content Include="Views\Courses\Mine.cshtml" />
     <Content Include="Views\Lecturer\Following.cshtml" />
   </ItemGroup>
   <ItemGroup>
