@@ -22,3 +22,62 @@ select,
 textarea {
     max-width: 280px;
 }
+
+.lecturer{
+    font-weight: bold;
+}
+.month {
+    padding: 4px;
+    font-weight:600;
+} 
+.day
+{
+    padding:4px;
+}
+
+
+.navbar-inverse {
+    background-color: #bd3a3a;
+    border-color: #ce4b4b;
+}
+
+    .navbar-inverse .navbar-brand {
+        color: #ffffff;
+    }
+
+    .navbar-inverse .navbar-nav > li > a {
+        color: #d7f726;
+    }
+
+.course {
+    list-style: none;
+}
+
+    .course > li {
+        position: relative;
+        margin-bottom: 30px;
+    }
+
+        .course > li .date {
+            text-align: center;
+            background-color: #d41d50;
+            color: white;
+            width: 60px;
+            border-radius: 8px;
+        }
+
+        .course > li .details {
+            position: absolute;
+            top: 0px;
+            left: 70px;
+        }
+
+        .course > li .action {
+            display: inline;
+            left: 70px;
+            position: absolute;
+        }
+
+        .course > li:hover .action {
+            display: block;
+        }

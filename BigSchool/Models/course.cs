@@ -4,14 +4,17 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace BigSchool.Models
+namespace bigschool.Models
 {
     public class Course
     {
         public int Id { get; set; }
-        public ApplicationUser Lecturer { get; set;}
+
+		public bool IsCanceled { get; set; }
+
+        public ApplicationUser Lecturer { get; set; }
         [Required]
-        public string LectunerId { get; set; }
+        public string LecturerId { get; set; }
         [Required]
         [StringLength(255)]
         public string Place { get; set; }
@@ -19,6 +22,8 @@ namespace BigSchool.Models
         public Category Category { get; set; }
         [Required]
         public byte CategoryId { get; set; }
+
     }
-  
+
+
 }

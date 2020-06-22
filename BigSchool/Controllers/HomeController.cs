@@ -1,16 +1,50 @@
-﻿using System;
+﻿using bigschool.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity;
+using bigschool.ViewModels;
+using Microsoft.AspNet.Identity;
 
-namespace BigSchool.Controllers
+namespace bigschool.Controllers
 {
     public class HomeController : Controller
     {
+        private ApplicationDbContext _dbContext;
+
+        public HomeController()
+        {
+            _dbContext = new ApplicationDbContext();
+        }
+
         public ActionResult Index()
         {
-            return View();
+           
+
+            var upcommingCourses = _dbContext.Courses
+                .Include(c => c.Lecturer)
+                .Include(c => c.Category)
+                .Where(c => c.DateTime > DateTime.Now);
+
+            
+
+			var viewModel = new CourseViewModel
+			{
+				UpcommingCourses = upcommingCourses,
+				ShowAction = User.Identity.IsAuthenticated
+			};
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var follow = _dbContext.Followings.Where(f => f.FollowerId == userId).ToList();
+
+                viewModel.ListFollowing = follow;
+            }
+
+            return View(viewModel);
         }
 
         public ActionResult About()
@@ -25,6 +59,22 @@ namespace BigSchool.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+
+        public ActionResult DeleteFollowing(string id)
+        {
+            var userId = User.Identity.GetUserId();
+            Following following = _dbContext.Followings.Where(f => f.FolloweeId == id && f.FollowerId == userId).FirstOrDefault();
+            if (following == null)
+            {
+                return null;
+            }
+
+            _dbContext.Followings.Remove(following);
+            _dbContext.SaveChanges();
+
+            return RedirectToAction("Index");
         }
     }
 }
