@@ -7,6 +7,9 @@
 <h2>Following</h2>
 
 <ul class="row">
+    @{
+        var varID = 0;
+    }
     @foreach (var course in Model.FollowingCourse)
     {
         <li>
@@ -15,36 +18,25 @@
                     @course.Name
                     @if (Model.ShowAction)
                     {
-                        <button data-user-id="@course.Name" class="btn btn-default btn-sm js-toggle-follow">Following</button>
+                        //<button data-user-id="@course.Name" class="btn btn-default btn-sm js-toggle-follow">Following</button>
+                        <button class="btn btn-default btn-sm js-toggle-follow btn-default-color" data-user-id="@Model.ListFollowing[varID].FolloweeId">Following</button>
                     }
                 </span>                
             </div>
         </li>
+        varID = varID + 1;
     }
 </ul>
 @section scripts
 {
     <script>
 		$(document).ready(function () {
-			$(".js-toggle-attendance").click(function (e) {
-				var button = $(e.target);
-				$.post("/api/attendances", { courseID: button.attr("data-course-id") })
-					.done(function() {
-						button
-							.removeClass("btn-default")
-							.addClass("btn-info")
-							.text("Going");
-					})
-					.fail(function() {
-						alert("something failed!");
-					});
-			});
 
 			$(".js-toggle-follow").click(function (e) {
 				var button = $(e.target);
 				$.post("/api/followings", { followeeId: button.attr("data-user-id") })
 					.done(function () {
-						button.text("Following");
+                        location.reload();
 					})
 					.fail(function () {
 						alert("something failed!");

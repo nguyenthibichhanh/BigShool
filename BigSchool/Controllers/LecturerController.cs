@@ -42,6 +42,12 @@ namespace bigschool.Controllers
                 ShowAction = User.Identity.IsAuthenticated
             };
 
+            if (User.Identity.IsAuthenticated)
+            {
+                var follow = _dbContext.Followings.Where(f => f.FollowerId == userId).ToList();
+                viewModel.ListFollowing = follow;
+            }
+               
             return View(viewModel);
         }
     }

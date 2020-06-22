@@ -52,9 +52,9 @@
                 @if (Model.ShowAction)
                 {
                     var checkFL = false;
-                    foreach (var item in Model.ListFollowing)
+                    foreach (var item in Model.ListAttendance)
                     {
-                        if (item.FolloweeId == course.LecturerId)
+                        if (item.AttendeeID == course.LecturerId)
                         {
                             checkFL = true;
                             break;

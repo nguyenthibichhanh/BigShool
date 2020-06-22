@@ -72,6 +72,13 @@ namespace bigschool.Controllers
 				ShowAction = User.Identity.IsAuthenticated
 			};
 
+			if (User.Identity.IsAuthenticated)
+			{
+				var attendance = _dbContext.Attendances.Where(f => f.AttendeeID == userId).ToList();
+
+				viewModel.ListAttendance = attendance;
+			}
+
 			return View(viewModel);
 		}
 
@@ -81,7 +88,7 @@ namespace bigschool.Controllers
 		{
 			var userId = User.Identity.GetUserId();
 			var courses = _dbContext.Courses
-				.Where(c => c.LecturerId == userId && c.DateTime > DateTime.Now)
+				.Where(c => c.LecturerId == userId && c.DateTime > DateTime.Now && c.IsCanceled == false)
 				.Include(l => l.Lecturer)
 				.Include(c => c.Category)
 				.ToList();
