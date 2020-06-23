@@ -3,6 +3,23 @@
     ViewBag.Title = "Home Page";
 }
 <br />
+
+@using (Html.BeginForm("Search", "Home", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="submit">Go!</button>
+                </span>
+                <input type="text" class="form-control" placeholder="Search for..." name="searchStr">
+            </div><!-- /input-group -->
+        </div><!-- /.col-lg-6 -->
+
+    </div><!-- /.row -->
+}
+
+<br />
 <ul class="course">
     @foreach (var course in Model.UpcommingCourses)
     {
@@ -66,21 +83,21 @@
                     }
                     else
                     {
-                            <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
+                        <button data-course-id="@course.Id" class="btn btn-default btn-sm js-toggle-attendance">Going?</button>
                     }
 
-            }
+                }
             </div>
         </li>
     }
 </ul>
 @section scripts
 {
-	<script>
-		$(document).ready(function () {
-			$(".js-toggle-attendance").click(function (e) {
-				var button = $(e.target);
-				$.post("/api/attendances", { courseID: button.attr("data-course-id") })
+    <script>
+        $(document).ready(function () {
+            $(".js-toggle-attendance").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/attendances", { courseID: button.attr("data-course-id") })
                     .done(function () {
                         if (button.text() == "Going?") {
                             button.text("Going");
@@ -90,19 +107,19 @@
                             button.text("Going?");
                             button.css("background-color", "#ffffff");
                         }
-						//button
-						//	.removeClass("btn-default")
-						//	.addClass("btn-info")
-						//	.text("Going");
-					})
-					.fail(function() {
-						alert("something failed!");
-					});
-			});
+                        //button
+                        //	.removeClass("btn-default")
+                        //	.addClass("btn-info")
+                        //	.text("Going");
+                    })
+                    .fail(function () {
+                        alert("something failed!");
+                    });
+            });
 
-			$(".js-toggle-follow").click(function (e) {
-				var button = $(e.target);
-				$.post("/api/followings", { followeeId: button.attr("data-user-id") })
+            $(".js-toggle-follow").click(function (e) {
+                var button = $(e.target);
+                $.post("/api/followings", { followeeId: button.attr("data-user-id") })
                     .done(function () {
                         if (button.text() == "Follow") {
                             button.text("Following");
@@ -112,22 +129,22 @@
                             button.text("Follow");
                             button.css("background-color", "#ffffff");
                         }
-						
-					})
-					.fail(function () {
-						alert("something failed!");
-					});
+
+                    })
+                    .fail(function () {
+                        alert("something failed!");
+                    });
             });
 
-            
-		});
-	</script>	
+
+        });
+    </script>
 }
 
 <div class="row">
     <ul>
-        @foreach(var course in Model.UpcommingCourses) //UpcommingCourses
-		{
+        @foreach (var course in Model.UpcommingCourses) //UpcommingCourses
+        {
             <li>
                 @course.DateTime - @course.Lecturer.Name
             </li>
@@ -136,4 +153,4 @@
 </div>
 
 
-			
+

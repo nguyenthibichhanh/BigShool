@@ -78,5 +78,33 @@ namespace bigschool.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Search(string searchStr)
+        {
+            var upcomingCourses = _dbContext.Courses
+               .Include(c => c.Lecturer)
+               .Include(c => c.Category)
+               .Where(c => c.DateTime > DateTime.Now && c.IsCanceled == false && c.Lecturer.Name.Contains(searchStr)
+               || c.Place.Contains(searchStr) && c.DateTime > DateTime.Now && c.IsCanceled == false
+               || c.Category.Name.Contains(searchStr) && c.DateTime > DateTime.Now && c.IsCanceled == false);
+            var viewModel = new CourseViewModel
+            {
+                UpcommingCourses = upcomingCourses,
+                ShowAction = User.Identity.IsAuthenticated
+            };
+
+            if (User.Identity.IsAuthenticated)
+            {
+                var userId = User.Identity.GetUserId();
+                var follow = _dbContext.Followings.Where(f => f.FollowerId == userId).ToList();
+                var attendance = _dbContext.Attendances.Where(f => f.AttendeeID == userId).ToList();
+
+                viewModel.ListFollowing = follow;
+                viewModel.ListAttendance = attendance;
+            }
+            return View("Index", viewModel);
+        }
     }
 }
